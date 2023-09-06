@@ -5,17 +5,17 @@ const initialState = {
     email: null,
     username: null,
     userID: null,
-}
+};
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     SET_ACTIVE_USER: (state, action) => {
-      const { email, userName, userID } = action.payload;
+      const { email, username, userID } = action.payload;
       state.isLoggedIn = true;
       state.email = email;
-      state.username = userName;
+      state.username = username;
       state.userID = userID;
     },
     REMOVE_ACTIVE_USER: (state, action) => {
