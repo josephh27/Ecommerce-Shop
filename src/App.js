@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // Pages
 import { Home, Contact, Login, Register, Reset, Admin } from "./pages";
 // Components
-import { Header, Footer } from "./components";
+import { Header, Footer, ProductDetails } from "./components";
 import { AdminOnlyRoute } from "./components/adminOnlyRoute/AdminOnlyRoute";
 
 function App() {
@@ -27,6 +27,7 @@ function App() {
                 <Admin />
               </AdminOnlyRoute> } 
             />
+            <Route path="/product-details/:id" element={ <ProductDetails /> } />
           </Routes>
         <Footer />
       </BrowserRouter>

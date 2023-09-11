@@ -40,8 +40,6 @@ const AddProduct = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   
-  console.log(productEdit);
-
   function detectForm(id, f1, f2) {
     if (id === "ADD") {
       return f1;

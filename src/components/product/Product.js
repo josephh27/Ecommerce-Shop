@@ -5,6 +5,7 @@ import ProductList from './productList/ProductList';
 import useFetchCollection from '../../customHooks/useFetchCollection';
 import { useDispatch, useSelector } from 'react-redux';
 import { STORE_PRODUCTS, selectProducts } from '../../redux/slice/productSlice';
+import Loader from '../loader/Loader';
 
 const Product = () => {
   const { data, isLoading } = useFetchCollection("products");
@@ -21,10 +22,12 @@ const Product = () => {
     <section>
       <div className={`container ${styles.product}`}>
         <aside className={styles.filter}>
-          <ProductFilter />
+          {isLoading ? null : (<ProductFilter />)}          
         </aside>
         <div className={styles.content}>
-          <ProductList products={products}/>
+          {isLoading ? <Loader /> : (
+          <ProductList products={products} />
+          ) }
         </div>
       </div>
     </section>
