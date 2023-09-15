@@ -12,9 +12,10 @@ import { selectProducts } from '../../../redux/slice/productSlice';
 
 const categories = [
   {id: 1, name: "Laptop"},
-  {id: 2, name: "Electronics"},
-  {id: 3, name: "Fashion"},
+  {id: 2, name: "Monitor"},
+  {id: 3, name: "PC Component"},
   {id: 4, name: "Phone"},
+
 ];
 
 const initialState = {
