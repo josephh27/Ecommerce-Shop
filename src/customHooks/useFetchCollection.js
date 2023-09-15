@@ -12,13 +12,15 @@ const useFetchCollection = (collectionName) => {
         try {
           const docRef = collection(db, collectionName);
           const q = query(docRef, orderBy("name", "asc"));
-    
+          
           onSnapshot(q, (snapshot) => {  
             const allData = snapshot.docs.map((doc) => ({
               id: doc.id,
               ...doc.data()
             }));
-            // console.log(allData); 
+            setData(allData.sort((a, b) => {
+              return a['name'].toLowerCase().localeCompare(b['name'].toLowerCase());
+            }));
             setData(allData);
             setIsLoading(false);            
           });
