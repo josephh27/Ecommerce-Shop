@@ -8,7 +8,7 @@ const ProductFilter = () => {
   const products = useSelector(selectProducts);
   const [category, setCategory] = useState("All");
   const [brand, setBrand] = useState("All");
-  const [price, setPrice] = useState(300);
+  const [price, setPrice] = useState(1499);
   const minPrice = useSelector(selectMinPrice);
   const maxPrice = useSelector(selectMaxPrice);
 
@@ -25,7 +25,6 @@ const ProductFilter = () => {
     ...new Set(products.map((product) => product.brand))
   ]
 
-  // console.log(allBrands);
   useEffect(() => {
     dispatch(FILTER_BY_BRAND({products, brand}))
   }, [dispatch, products, brand]);
@@ -75,7 +74,7 @@ const ProductFilter = () => {
         <div className={styles.price}>
           <input 
             type="range" 
-            value={price} 
+            value={price}
             onChange={(e) => setPrice(e.target.value)}  
             min={minPrice} 
             max={maxPrice}  

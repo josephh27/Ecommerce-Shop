@@ -37,7 +37,6 @@ const ProductList = ({products}) => {
       products
     }))
   }, [dispatch, search, products]);
-  console.log(filteredProducts.length);
 
   return (
     <div className={styles["product-list"]} id="product">
