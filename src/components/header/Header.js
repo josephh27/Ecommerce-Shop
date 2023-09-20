@@ -34,8 +34,9 @@ const Header = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(CALCULATE_TOTAL_QUANTITY);
+    dispatch(CALCULATE_TOTAL_QUANTITY());
   }, []);
+
 
   const fixNavbar = () => {
     if (window.scrollY > 50) {
