@@ -25,7 +25,7 @@ const Checkout = () => {
     const dispatch = useDispatch();
 
     const dev = process.env.NODE_ENV !== 'production';
-    const server = dev ? 'http://localhost:4242/create-payment-intent' : 'https://admin-ui-rtt2.onrender.com/create-payment-intent';
+    const server = dev ? 'http://localhost:4242/create-payment-intent' : 'https://ecommerce-shop-api.onrender.com/create-payment-intent';
     useEffect(() => {
         dispatch(CALCULATE_SUBTOTAL());
         dispatch(CALCULATE_TOTAL_QUANTITY());
@@ -35,7 +35,7 @@ const Checkout = () => {
 
     useEffect(() => {
       // Create PaymentIntent as soon as the page loads
-      fetch("http://localhost:4242/create-payment-intent", {
+      fetch(server, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 

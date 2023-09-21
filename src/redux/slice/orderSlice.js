@@ -1,13 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-
+    orderHistory: []
 }
 
 const orderSlice = createSlice({
-  name: second,
+  name: "orders",
   initialState,
-  reducers: {}
+  reducers: {
+    STORE_ORDERS(state, action) {
+        
+    }
+  }
 });
 
 export const {} = orderSlice.actions
