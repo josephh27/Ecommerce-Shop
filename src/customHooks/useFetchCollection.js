@@ -11,20 +11,24 @@ const useFetchCollection = (collectionName) => {
         setIsLoading(true);
         try {
           const docRef = collection(db, collectionName);
-          const q = query(docRef, orderBy("name", "asc"));
+          const q = query(docRef);
           
           onSnapshot(q, (snapshot) => {  
             const allData = snapshot.docs.map((doc) => ({
               id: doc.id,
               ...doc.data()
             }));
-            setData(allData.sort((a, b) => {
-              return a['name'].toLowerCase().localeCompare(b['name'].toLowerCase());
-            }));
-            setData(allData);
+            if (collectionName === "products") {
+              setData(allData.sort((a, b) => {
+                return a['name'].toLowerCase().localeCompare(b['name'].toLowerCase());
+              }));
+            } else {
+              setData(allData);
+            }
+            
             setIsLoading(false);            
           });
-          
+          console.log(data);
         } catch(error) {
           setIsLoading(false);
           toast.error(error.message);

@@ -1,0 +1,1 @@
+- Make price of each product data come from the backend.
