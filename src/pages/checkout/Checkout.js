@@ -25,7 +25,7 @@ const Checkout = () => {
     const dispatch = useDispatch();
 
     const dev = process.env.NODE_ENV !== 'production';
-    const server = dev ? 'http://localhost:4242/create-payment-intent' : 'https://ecommerce-shop-api.onrender.com/create-payment-intent';
+    const server = dev ? 'http://localhost:4242/create-payment-intent' : 'https:4242//ecommerce-shop-api.onrender.com/create-payment-intent';
     useEffect(() => {
         dispatch(CALCULATE_SUBTOTAL());
         dispatch(CALCULATE_TOTAL_QUANTITY());
