@@ -2,10 +2,11 @@ import React from 'react';
 import styles from "./Admin.module.scss";
 import Navbar from '../../components/admin/navbar/Navbar';
 import { Routes, Route } from 'react-router-dom';
-import Home from '../home/Home';
 import ViewProducts from '../../components/admin/viewProducts/ViewProducts';
 import AddProduct from '../../components/admin/addProduct/AddProduct';
 import Orders from '../../components/admin/orders/Orders';
+import Home from '../../components/admin/home/Home';
+import OrderDetails from '../../components/admin/orderDetails/OrderDetails';
 
 const Admin = () => {
   return (
@@ -15,10 +16,11 @@ const Admin = () => {
       </div>
       <div className={styles.content}>
         <Routes>
-          <Route path="home" element={<Home/>}/>
+          <Route path="home" element={<Home />}/>
           <Route path="all-products" element={<ViewProducts />}/>
           <Route path="add-product/:id" element={<AddProduct />}/>
           <Route path="orders" element={<Orders />}/>
+          <Route path="order-details/:id" element={<OrderDetails />}/>
         </Routes>
       </div>
     </div>

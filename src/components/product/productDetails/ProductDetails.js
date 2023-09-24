@@ -7,12 +7,22 @@ import styles from './ProductDetails.module.scss';
 import Loader from '../../loader/Loader';
 import { toast } from 'react-toastify';
 import { ADD_TO_CART, DECREASE_CART, CALCULATE_TOTAL_QUANTITY, selectCartItems } from '../../../redux/slice/cartSlice';
+import useFetchDocument from '../../../customHooks/useFetchDocument';
+import useFetchCollection from '../../../customHooks/useFetchCollection';
+import StarsRating from 'react-star-rate';
+import Card from '../../card/Card';
 
 const ProductDetails = () => {
   const {id} = useParams(); 
   const [product, setProduct] = useState(null);
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
+  const { document } = useFetchDocument("products", id);
+  const { data } = useFetchCollection("reviews");
+  const filteredReviews = data.filter((review) => {
+    return review.productID === id;
+  });
+
   const cart = cartItems.find((cartItem) => {
     return cartItem.id === id;
   });
@@ -20,24 +30,9 @@ const ProductDetails = () => {
     return cartItem.id === id;
   });
 
-  const getProduct = async () => {
-    const docRef = doc(db, "products", id);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const obj = {
-        id: id,
-        ...docSnap.data()
-      }
-      setProduct(obj);
-    } else {  
-      toast.error("Product not found");
-    }
-  };
-
   useEffect(() => {
-    getProduct();
-  }, []);
+    setProduct(document);
+  }, [document]);
 
   const addToCart = (product) => {
     dispatch(ADD_TO_CART(product));
@@ -92,6 +87,33 @@ const ProductDetails = () => {
             </div>
           </>
         )}
+        <Card cardClass={styles.card}>
+          <h3>Product Reviews</h3>
+          <div>
+            {filteredReviews.length === 0 ? (
+              <p>There are no reviews in this product yet.</p>
+            ) : (
+              <>
+                {filteredReviews.map((filteredReview, index) => {
+                  const {rate, review, reviewDate, userName} = filteredReview;
+                  return (
+                    <div className={styles.review} key={index}>
+                      <StarsRating value={rate} />
+                      <p>{review}</p>
+                      <span>
+                        <b>{reviewDate}</b>
+                      </span>
+                      <br />
+                      <span>
+                        <b>by: {userName}</b>
+                      </span>
+                    </div>
+                  )
+                })}
+              </>
+            )}
+          </div>
+        </Card>
       </div>
     </section>
   )

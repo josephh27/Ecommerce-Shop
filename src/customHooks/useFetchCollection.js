@@ -28,7 +28,6 @@ const useFetchCollection = (collectionName) => {
             
             setIsLoading(false);            
           });
-          console.log(data);
         } catch(error) {
           setIsLoading(false);
           toast.error(error.message);

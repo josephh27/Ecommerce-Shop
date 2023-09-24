@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    orderHistory: []
+    orderHistory: [],
+    totalOrderAmount: null,
 }
 
 const orderSlice = createSlice({
@@ -10,12 +11,24 @@ const orderSlice = createSlice({
   reducers: {
     STORE_ORDERS(state, action) {
         state.orderHistory = action.payload;
-    }
-  }
+    },
+    CALCULATE_TOTAL_ORDER_AMOUNT(state, action) {
+      const array = [];
+      state.orderHistory.map((order) => {
+        const { orderAmount } = order;         
+        return array.push(orderAmount);
+      });
+      const totalAmount = array.reduce((a, b) => {
+        return a + b;
+      }, 0);
+      state.totalOrderAmount = totalAmount;
+    },
+  },
 });
 
-export const {STORE_ORDERS} = orderSlice.actions
+export const {STORE_ORDERS, CALCULATE_TOTAL_ORDER_AMOUNT} = orderSlice.actions
 
 export const selectOrderHistory = (state) => state.orders.orderHistory;
+export const selectTotalOrderAmount = (state) => state.orders.totalOrderAmount;
 
 export default orderSlice.reducer
