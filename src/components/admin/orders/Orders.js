@@ -4,13 +4,11 @@ import useFetchCollection from '../../../customHooks/useFetchCollection';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { STORE_ORDERS, selectOrderHistory } from '../../../redux/slice/orderSlice';
-import { selectUserID } from '../../../redux/slice/authSlice';
 import Loader from '../../loader/Loader';
 
 const Orders = () => {
   const {data, isLoading} = useFetchCollection("orders");
   const orders = useSelector(selectOrderHistory);
-  const userID = useSelector(selectUserID);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,10 +22,6 @@ const Orders = () => {
     navigate(`/admin/order-details/${id}`);
   };
 
-  const filteredOrders = orders.filter((order) => {
-    return order.userID === userID;
-  });
-  
   return (
     <>
       <div className={`${styles.order}`}>

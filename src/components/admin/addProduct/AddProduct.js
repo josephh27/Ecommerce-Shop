@@ -50,7 +50,7 @@ const AddProduct = () => {
   }
 
   const handleInputChange = (e) => {
-    const {name, value, placeholder} = e.target;
+    const {name, value} = e.target;
     setProduct({
       ...product,
       [name]: value
@@ -89,7 +89,7 @@ const AddProduct = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const docRef = addDoc(collection(db, "products"), {
+        addDoc(collection(db, "products"), {
         name: product.name,
         imageURL: product.imageURL,
         price: Number(product.price)  ,

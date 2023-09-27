@@ -35,7 +35,7 @@ const Header = () => {
 
   useEffect(() => {
     dispatch(CALCULATE_TOTAL_QUANTITY());
-  }, []);
+  }, [dispatch]);
 
 
   const fixNavbar = () => {
