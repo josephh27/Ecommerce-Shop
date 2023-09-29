@@ -28,7 +28,7 @@ const Product = () => {
   const toggleFilter = () => {
     setShowFilter(!showFilter);
   }
-
+  console.log(products);
   return (
     <section>
       <div className={`container ${styles.product}`}>

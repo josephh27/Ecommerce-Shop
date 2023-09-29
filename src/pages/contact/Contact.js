@@ -13,7 +13,7 @@ const Contact = () => {
   const sendEmail = (e) => {
     e.preventDefault();
 
-    emailjs.sendForm('service_r2wyqfh', 'template_q9ezfmw', form.current, '8XKkYoCD4WCPLfx3x')
+    emailjs.sendForm(process.env.REACT_APP_EMAILJS_SERVICE_ID, 'template_q9ezfmw', form.current, '8XKkYoCD4WCPLfx3x')
       .then((result) => {
         toast.success("Message sent successfully");
       }, (error) => {
