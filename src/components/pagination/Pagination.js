@@ -1,23 +1,30 @@
 import React, { useState } from 'react'
 import styles from './Pagination.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { SET_CURRENT_PAGE, selectCurrentPage } from '../../redux/slice/paginationSlice';
 
-const Pagination = ({currentPage, setCurrentPage, productsPerPage, totalProducts}) => {
-
+const Pagination = ({ productsPerPage, totalProducts}) => {
+    const currentPage = useSelector(selectCurrentPage);
     const pageNumbers = [];
     const totalPages = totalProducts / productsPerPage;
     // Limit the page numbers shown
     const [pageNumberLimit] = useState(5);
     const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
     const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
+    const dispatch = useDispatch();
 
     // Paginate
     const paginate = (pageNumber) => {
-        setCurrentPage(pageNumber);
+        dispatch(
+        SET_CURRENT_PAGE(pageNumber)            
+        )
     };
 
     // Go to the next page
     const paginateNext = () => {
-        setCurrentPage(currentPage + 1);
+        dispatch(
+            SET_CURRENT_PAGE(currentPage + 1)
+        )
         // Show next set of page numbers
         if (currentPage + 1 > maxPageNumberLimit) {
             setMaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
@@ -27,7 +34,9 @@ const Pagination = ({currentPage, setCurrentPage, productsPerPage, totalProducts
 
     // Go to previous page
     const paginatePrev = () => {
-        setCurrentPage(currentPage - 1);
+        dispatch(
+            SET_CURRENT_PAGE(currentPage - 1)
+        )
         if ((currentPage - 1) % pageNumberLimit === 0) {
             setMaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
             setMinPageNumberLimit(minPageNumberLimit - pageNumberLimit);

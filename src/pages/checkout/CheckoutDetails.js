@@ -45,8 +45,7 @@ const CheckoutDetails = () => {
         console.log(billingAddress);
         dispatch(SAVE_SHIPPING_ADDRESS(shippingAddress));
         dispatch(SAVE_BILLING_ADDRESS(billingAddress));
-        navigate("/checkout");
-        
+        navigate("/checkout-selection");
     };
 
   return (

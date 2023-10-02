@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styles from "./ProductFilter.module.scss";
 import { selectMaxPrice, selectMinPrice, selectProducts } from '../../../redux/slice/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { FILTER_BY_BRAND, FILTER_BY_CATEGORY, FILTER_BY_PRICE } from '../../../redux/slice/filterSlice';
+import { FILTER_ITEMS, selectFilteredProducts } from '../../../redux/slice/filterSlice';
+import { RESET_CURRENT_PAGE } from '../../../redux/slice/paginationSlice';
 
 const ProductFilter = () => {
   const products = useSelector(selectProducts);
@@ -11,32 +12,22 @@ const ProductFilter = () => {
   const [price, setPrice] = useState(1499);
   const minPrice = useSelector(selectMinPrice);
   const maxPrice = useSelector(selectMaxPrice);
-
-
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(FILTER_ITEMS({products, category, brand, price}));    
+    dispatch(RESET_CURRENT_PAGE());
+  }, [products, category, brand, price, dispatch]);
 
   const allCategories = [
     "All",
     ...new Set(products.map((product) => product.category))
-  ]
+  ];
 
   const allBrands = [
     "All",
     ...new Set(products.map((product) => product.brand))
-  ]
-
-  useEffect(() => {
-    dispatch(FILTER_BY_BRAND({products, brand}))
-  }, [dispatch, products, brand]);
-
-  useEffect(() => {
-    dispatch(FILTER_BY_PRICE({products, price}))
-  }, [dispatch, products, price]);
-
-  const filterProducts = (cat) => {
-    setCategory(cat);
-    dispatch(FILTER_BY_CATEGORY({products, category: cat}));    
-  };
+  ];
 
   const clearFilters = () => {
     setCategory("All");
@@ -52,13 +43,12 @@ const ProductFilter = () => {
           return (
             <button key={index} type="button"                                         
               className={`${category}` === cat ? `${styles.active}` : null}
-              onClick={() => filterProducts(cat)} 
+              onClick={() => setCategory(cat)} 
             >                               
               &#8250; {cat}
             </button>
           )
         })}
-        <button>All</button>
       </div>
       <h4>Brand</h4>
       <div className={styles.brand}>

@@ -9,7 +9,6 @@
     }
   
     .form {
-      width: 35rem;
       padding: 1.5rem;
       animation: slide-up 0.5s ease;
       h2 {
@@ -17,6 +16,8 @@
         text-align: center;
       }
       form {
+        width: 35rem;
+        max-width: 100%;
         input[type="text"],
         input[type="email"],
         input[type="password"] {

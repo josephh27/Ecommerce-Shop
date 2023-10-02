@@ -136,12 +136,16 @@ const ViewProducts = () => {
             </tbody>
           </table>          
         )}
-        <Pagination
+        {
+          filteredProducts.length > 0 &&
+          <Pagination
           productsPerPage={productsPerPage}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           totalProducts={filteredProducts.length}
         />
+        }
+        
       </div>
     </>
   )

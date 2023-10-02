@@ -1,0 +1,19 @@
+.status {
+  border: 3px solid var(--light-blue);
+  border-radius: 5px;
+  padding: 10px;
+  max-width: 400px;
+  margin-top: 20px;
+}
+.status .card {
+  width: 100%;
+  box-shadow: none;
+}
+.status .card select {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 10px;
+  border-radius: 5px;
+  font-size: 1.6rem;
+  font-weight: 540;
+}/*# sourceMappingURL=ChangeOrderStatus.module.css.map */

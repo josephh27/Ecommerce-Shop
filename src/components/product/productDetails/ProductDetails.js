@@ -63,10 +63,10 @@ const ProductDetails = () => {
                 <p className={styles.price}>{`$${product.price}`}</p>
                 <p>{product.desc}</p>
                 <p>
-                  <b>SKU</b> {product.id}
+                  <b>SKU:</b> {product.id}
                 </p>
                 <p>
-                  <b>Brand</b> {product.brand}
+                  <b>Brand:</b> {product.brand}
                 </p>
                 <div className={styles.count}>
                   {isAddedToCart < 0 ? null : (

@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    filteredProducts: []
+    origFilteredProducts: [],
+    filteredProducts: [],
+    searchFilteredProducts: []
 }
 
 const filterSlice = createSlice({
@@ -9,15 +11,18 @@ const filterSlice = createSlice({
   initialState,
   reducers: {
     FILTER_BY_SEARCH(state, action) {
-        const {products, search} = action.payload;
-        const tempProducts = products.filter((product) => {
+        const {search} = action.payload;
+        const currenProducts = state.origFilteredProducts
+        const tempProducts = currenProducts.filter((product) => {
             return (product.name.toLowerCase().includes(search.toLowerCase()) 
             || product.category.toLowerCase().includes(search.toLowerCase()));
         })
+        state.searchFilteredProducts = tempProducts;
         state.filteredProducts = tempProducts;
     },
     SORT_PRODUCTS(state, action) {
-      const {products, sort} = action.payload;
+      const {sort} = action.payload;
+      const products = state.filteredProducts;
       let tempProducts = [];
       if (sort === "latest") {
         tempProducts = products.slice().sort((a, b) => {
@@ -51,46 +56,66 @@ const filterSlice = createSlice({
 
       state.filteredProducts = tempProducts;
     },
-
-    FILTER_BY_CATEGORY(state, action) {
-      const {products, category} = action.payload;
+    FILTER_ITEMS(state, action) {
+      const {products, category, brand, price} = action.payload;
       let tempProducts = [];
-      if (category === "All") {
-          tempProducts = products;          
-      } else {
-        tempProducts = products.filter((product) => {
-          return product.category === category
-        })
-      }
-      state.filteredProducts = tempProducts;
-    },
-
-    FILTER_BY_BRAND(state, action) {
-      const {products, brand} = action.payload;
-      let tempProducts = [];
-      if (brand === "All") {
-          tempProducts = products;          
-      } else {
-        tempProducts = products.filter((product) => {
-          return product.brand === brand
-        })
-      }
-      state.filteredProducts = tempProducts;
-    },
-
-    FILTER_BY_PRICE(state, action) {
-      const {products, price} = action.payload;
-      let tempProducts = [];
+            
       tempProducts = products.filter((product) => {
+        return category === "All" || product.category === category 
+      })  
+      
+      tempProducts = tempProducts.filter((product) => {
+        return brand === "All" || product.brand === brand
+      })
+    
+      tempProducts = tempProducts.filter((product) => {
         return product.price <= price
       });
+      state.origFilteredProducts = tempProducts;
       state.filteredProducts = tempProducts;
     }
+
+    // FILTER_BY_CATEGORY(state, action) {
+    //   const {products, category} = action.payload;
+    //   let tempProducts = [];
+    //   if (category === "All") {
+    //       tempProducts = products;          
+    //   } else {
+    //     tempProducts = products.filter((product) => {
+    //       return product.category === category
+    //     })
+    //   }
+    //   state.filteredProducts = tempProducts;
+    // },
+
+    // FILTER_BY_BRAND(state, action) {
+    //   const {products, brand} = action.payload;
+    //   let tempProducts = [];
+    //   if (brand === "All") {
+    //       tempProducts = products;          
+    //   } else {
+    //     tempProducts = products.filter((product) => {
+    //       return product.brand === brand
+    //     })
+    //   }
+    //   state.filteredProducts = tempProducts;
+    // },
+
+    // FILTER_BY_PRICE(state, action) {
+    //   const {products, price} = action.payload;
+    //   let tempProducts = [];
+    //   tempProducts = products.filter((product) => {
+    //     return product.price <= price
+    //   });
+    //   state.filteredProducts = tempProducts;
+    // }
   }  
 }); 
 
-export const {FILTER_BY_SEARCH, SORT_PRODUCTS, FILTER_BY_CATEGORY, FILTER_BY_BRAND, FILTER_BY_PRICE} = filterSlice.actions;
+export const {FILTER_BY_SEARCH, SORT_PRODUCTS, FILTER_BY_CATEGORY, FILTER_BY_BRAND, FILTER_BY_PRICE, FILTER_ITEMS} = filterSlice.actions;
 
-export const selectFilteredProducts = (state) => state.filter.filteredProducts
+export const selectFilteredProducts = (state) => state.filter.filteredProducts;
+
+export const selectOrigFilteredProducts = (state) => state.filter.origFilteredProducts;
 
 export default filterSlice.reducer

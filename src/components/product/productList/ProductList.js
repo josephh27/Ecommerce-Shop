@@ -5,39 +5,47 @@ import { FaListAlt } from 'react-icons/fa';
 import Search from '../../search/Search';
 import ProductItem from '../productItem/ProductItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { FILTER_BY_SEARCH, SORT_PRODUCTS, selectFilteredProducts } from '../../../redux/slice/filterSlice';
+import { FILTER_BY_SEARCH, SORT_PRODUCTS, selectFilteredProducts, selectOrigFilteredProducts } from '../../../redux/slice/filterSlice';
 import Pagination from '../../pagination/Pagination';
+import { RESET_CURRENT_PAGE, selectCurrentPage } from '../../../redux/slice/paginationSlice';
+
 
 const ProductList = ({products}) => {
   const [grid, setGrid] = useState(true);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
-  const filteredProducts = useSelector(selectFilteredProducts);
 
   // Pagination states
-  const [currentPage, setCurrentPage] = useState(1);
+  const currentPage = useSelector(selectCurrentPage)
   const [productsPerPage] = useState(6);
+  const filteredProducts = useSelector(selectFilteredProducts);
   // Get current products
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
+  // Redux states
+  const origFilteredProducts = useSelector(selectOrigFilteredProducts);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(SORT_PRODUCTS({
-      sort,
-      products
-    }))
-  }, [dispatch, search, sort, products]);
+      sort
+    }));
+    dispatch(
+      RESET_CURRENT_PAGE()
+    )
+  }, [dispatch, sort]);
 
   useEffect(() => {
     dispatch(FILTER_BY_SEARCH({
-      search,
-      products
-    }))
-  }, [dispatch, search, products]);
-
+      search
+    }));
+    dispatch(
+      RESET_CURRENT_PAGE()
+    )
+  }, [dispatch, search, origFilteredProducts]);
   return (
     <div className={styles["product-list"]} id="product">
       <div className={styles.top}>
@@ -68,7 +76,7 @@ const ProductList = ({products}) => {
       </div>
 
       <div className={grid ? `${styles.grid}` : `${styles.list}`}>
-        {products.length === 0 ? (
+        {filteredProducts.length === 0 ? (
           <p>No product found.</p>
         ) : (
           <>
@@ -82,12 +90,13 @@ const ProductList = ({products}) => {
           </>
         )}
       </div>
-      <Pagination
+      { filteredProducts.length > 0 &&
+        <Pagination
         productsPerPage={productsPerPage}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
         totalProducts={filteredProducts.length}
       />
+      }
+      
     </div>
   )
 }
