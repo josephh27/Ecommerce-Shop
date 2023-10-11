@@ -6,11 +6,11 @@ import { CALCULATE_SUBTOTAL, CALCULATE_TOTAL_QUANTITY, selectCartItems, selectCa
 import { selectEmail } from "../../redux/slice/authSlice";
 import { selectBillingAddress, selectShippingAddress } from "../../redux/slice/checkoutSlice";
 import { toast } from "react-toastify";
-import CheckoutForm from "../../components/checkoutForm/CheckoutForm";
+import CheckoutFormStripe from "../../components/checkoutForm/CheckoutFormStripe";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 
-const Checkout = () => {
+const CheckoutStripe = () => {
     
     const [message, setMessage] = useState("Initializing checkout...");
     const [clientSecret, setClientSecret] = useState("");
@@ -25,14 +25,13 @@ const Checkout = () => {
     const dispatch = useDispatch();
 
     const dev = process.env.NODE_ENV !== 'production';
-    const server = dev ? 'http://localhost:4242/create-payment-intent' : 'https://ecommerce-shop-api.onrender.com/create-payment-intent';
+    const server = dev ? 'http://localhost:4242/create-payment-intent-stripe' : 'https://ecommerce-shop-api.onrender.com/create-payment-intent-stripe';
     useEffect(() => {
         dispatch(CALCULATE_SUBTOTAL());
         dispatch(CALCULATE_TOTAL_QUANTITY());
     }, [dispatch, cartItems]);
 
     const description = `eShop payment: Email: ${customerEmail}, Amount: ${totalAmount}`;
-
     useEffect(() => {
       // Create PaymentIntent as soon as the page loads
       fetch(server, {
@@ -78,11 +77,11 @@ const Checkout = () => {
             </section>
             {clientSecret && (
                 <Elements options={options} stripe={stripePromise}>
-                    <CheckoutForm />
+                    <CheckoutFormStripe />
                 </Elements>
             )}
         </>
     );
 }
 
-export default Checkout
+export default CheckoutStripe

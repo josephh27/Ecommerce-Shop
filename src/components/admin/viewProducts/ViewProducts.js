@@ -14,6 +14,7 @@ import useFetchCollection from '../../../customHooks/useFetchCollection';
 import { FILTER_BY_SEARCH, selectFilteredProducts } from '../../../redux/slice/filterSlice';
 import Search from '../../search/Search';
 import Pagination from '../../pagination/Pagination';
+import { selectCurrentPage } from '../../../redux/slice/paginationSlice';
 
 const ViewProducts = () => {
   const [search, setSearch] = useState("");
@@ -23,7 +24,7 @@ const ViewProducts = () => {
   const dispatch = useDispatch();
 
    // Pagination states
-   const [currentPage, setCurrentPage] = useState(1);
+   const currentPage = useSelector(selectCurrentPage);
    const [productsPerPage] = useState(6);
    // Get current products
    const indexOfLastProduct = currentPage * productsPerPage;
@@ -121,7 +122,7 @@ const ViewProducts = () => {
                       {category}
                     </td>
                     <td>
-                      {`$${price}`}
+                      {`₱${price}`}
                     </td>
                     <td className={styles.icons}>
                       <Link to={`/admin/add-product/${id}`}>
@@ -141,7 +142,6 @@ const ViewProducts = () => {
           <Pagination
           productsPerPage={productsPerPage}
           currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
           totalProducts={filteredProducts.length}
         />
         }

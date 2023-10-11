@@ -1,17 +1,25 @@
-import React from 'react'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './CheckoutSelection.module.scss';
 
+
 const CheckoutSelection = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className={`container ${styles.selection}`}>
-      <h2>How do you wish to checkout?</h2>
-      <button className="button">
-
-      </button>
-      <button className="button">
-
-      </button>
-    </div>
+    <section>
+      <div className={`container ${styles.selection}`}>
+        <h2>How do you wish to checkout?</h2>
+        <div className={`${styles.buttons}`}>          
+          <button className={`${styles.button} --btn --btn-primary ${styles.stripe}`} onClick={() => navigate('/checkout-stripe')}>
+            STRIPE            
+          </button>
+          <button className={`${styles.button} --btn --btn-primary ${styles.paymongo}`}  onClick={() => navigate('/checkout-paymongo')}>
+            PAYMONGO            
+          </button>        
+        </div>       
+      </div>
+    </section>
   )
 }
 

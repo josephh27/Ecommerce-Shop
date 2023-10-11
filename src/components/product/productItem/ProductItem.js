@@ -30,7 +30,7 @@ const ProductItem = ({product, grid, id, name, price, desc, imageURL}) => {
       </Link>
       <div className={styles.content}>
         <div className={styles.details}>
-          <p>{`$${price}`}</p>
+          <p>{`₱${price}`}</p>
           <h4>{shortenText(name, 18)}</h4>
         </div>
         {!grid && <p className={styles.desc}>{shortenText(desc, 200)}</p>}

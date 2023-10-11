@@ -5,7 +5,7 @@ import {
   useElements
 } from "@stripe/react-stripe-js";
 import { useNavigate } from "react-router-dom";
-import styles from './CheckoutForm.module.scss';
+import styles from './CheckoutFormStripe.module.scss';
 import Card from "../card/Card";
 import CheckoutSummary from "../checkoutSummary/CheckoutSummary";
 import spinnerImg from '../../assets/loader.gif';

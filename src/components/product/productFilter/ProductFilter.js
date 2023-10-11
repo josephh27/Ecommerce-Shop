@@ -13,7 +13,7 @@ const ProductFilter = () => {
   const minPrice = useSelector(selectMinPrice);
   const maxPrice = useSelector(selectMaxPrice);
   const dispatch = useDispatch();
-
+  console.log(maxPrice);
   useEffect(() => {
     dispatch(FILTER_ITEMS({products, category, brand, price}));    
     dispatch(RESET_CURRENT_PAGE());
@@ -60,7 +60,7 @@ const ProductFilter = () => {
           })}        
         </select>
         <h4>Price</h4>
-        <p>{`$${price}`}</p>
+        <p>{`₱${price}`}</p>
         <div className={styles.price}>
           <input 
             type="range" 

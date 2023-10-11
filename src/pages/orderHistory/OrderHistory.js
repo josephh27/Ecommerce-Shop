@@ -58,7 +58,7 @@ const OrderHistory = () => {
                         <td>{index + 1}</td>
                         <td>{orderDate} at {orderTime}</td>
                         <td>{id}</td>
-                        <td>{`$${orderAmount}`}</td>
+                        <td>{`₱${orderAmount}`}</td>
                         <td>
                           <p className={orderStatus !== "Delivered" ? `${styles.pending}` : `${styles.delivered}`}>
                             {orderStatus}

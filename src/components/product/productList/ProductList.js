@@ -16,7 +16,7 @@ const ProductList = ({products}) => {
   const [sort, setSort] = useState("");
 
   // Pagination states
-  const currentPage = useSelector(selectCurrentPage)
+  const currentPage = useSelector(selectCurrentPage);
   const [productsPerPage] = useState(6);
   const filteredProducts = useSelector(selectFilteredProducts);
   // Get current products

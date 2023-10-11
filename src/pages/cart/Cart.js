@@ -84,7 +84,7 @@ const Cart = () => {
                       </p>
                       <img src={imageURL} alt={name} style={{width: "100px"}}/>
                     </td>
-                    <td>{price}</td>
+                    <td>₱{price}</td>
                     <td>
                       <div className={styles.count}>
                         <button className="--btn" onClick={() => decreaseCart(cartItem)}>-</button>
@@ -95,7 +95,7 @@ const Cart = () => {
                       </div>
                     </td>
                     <td>
-                      {(price * cartQuantity).toFixed(2)}
+                      ₱{(price * cartQuantity).toFixed(2)}
                     </td>
                     <td className={styles.icons}>
                       <FaTrashAlt size={19} color="red" onClick={() => removeFromCart(cartItem)}/>
@@ -115,7 +115,7 @@ const Cart = () => {
                   <p><b>{`Cart Item(s): ${cartTotalQuantity}`}</b></p>
                   <div className={styles.text}>
                     <h4>Subtotal: </h4>
-                    <h3>{`$${cartTotalAmount.toFixed(2)}`}</h3>
+                    <h3>{`₱${cartTotalAmount.toFixed(2)}`}</h3>
                   </div>
                   <p>Tax and shipping calculated at checkout</p>
                   <button className="--btn --btn-primary --btn-block" onClick={checkout}>Checkout</button>

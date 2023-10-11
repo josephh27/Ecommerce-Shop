@@ -74,41 +74,6 @@ const filterSlice = createSlice({
       state.origFilteredProducts = tempProducts;
       state.filteredProducts = tempProducts;
     }
-
-    // FILTER_BY_CATEGORY(state, action) {
-    //   const {products, category} = action.payload;
-    //   let tempProducts = [];
-    //   if (category === "All") {
-    //       tempProducts = products;          
-    //   } else {
-    //     tempProducts = products.filter((product) => {
-    //       return product.category === category
-    //     })
-    //   }
-    //   state.filteredProducts = tempProducts;
-    // },
-
-    // FILTER_BY_BRAND(state, action) {
-    //   const {products, brand} = action.payload;
-    //   let tempProducts = [];
-    //   if (brand === "All") {
-    //       tempProducts = products;          
-    //   } else {
-    //     tempProducts = products.filter((product) => {
-    //       return product.brand === brand
-    //     })
-    //   }
-    //   state.filteredProducts = tempProducts;
-    // },
-
-    // FILTER_BY_PRICE(state, action) {
-    //   const {products, price} = action.payload;
-    //   let tempProducts = [];
-    //   tempProducts = products.filter((product) => {
-    //     return product.price <= price
-    //   });
-    //   state.filteredProducts = tempProducts;
-    // }
   }  
 }); 
 
