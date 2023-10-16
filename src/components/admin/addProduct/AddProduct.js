@@ -1,21 +1,21 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from "./AddProduct.module.scss";
 import Card from '../../card/Card';
 import { db, storage } from '../../../firebase/config';
 import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { Timestamp, addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { useNavigate, useParams } from 'react-router-dom';
+import useFetchCollection from '../../../customHooks/useFetchCollection';
 import Loader from '../../loader/Loader';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
-import { selectProducts } from '../../../redux/slice/productSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { STORE_PRODUCTS, selectProducts } from '../../../redux/slice/productSlice';
 
 const categories = [
   {id: 1, name: "Laptop"},
   {id: 2, name: "Monitor"},
   {id: 3, name: "PC Component"},
   {id: 4, name: "Phone"},
-
 ];
 
 const initialState = {
@@ -29,19 +29,30 @@ const initialState = {
 
 const AddProduct = () => {
   const {id} = useParams();
+  const { data }  = useFetchCollection("products");
+  console.log(data);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const products = useSelector(selectProducts);
   const productEdit = products.find((item) => item.id === id);
-  
   const [product, setProduct] = useState(() => {
     const newState = detectForm(id, { ...initialState}, productEdit);
     return newState;
   });
-
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
-  
+
+  useEffect(() => {
+    dispatch(STORE_PRODUCTS({
+      products: data 
+    })
+  );
+  }, [dispatch, data]);
+
+ 
+
   function detectForm(id, f1, f2) {
+    console.log(id);
     if (id === "ADD") {
       return f1;
     } else {
@@ -142,7 +153,9 @@ const AddProduct = () => {
   return (
     <>
       {isLoading && <Loader />}
-      <div className={styles.product}>
+      { 
+        product && 
+        <div className={styles.product}>
         <h2>{detectForm(id, "Add New Product", "Edit Product")}</h2>
         <Card cardClass={styles.card}>
           <form onSubmit={detectForm(id, addProduct, editProduct)}>
@@ -242,7 +255,9 @@ const AddProduct = () => {
             <button className="--btn --btn-primary">{detectForm(id, "Save Product", "Edit Product")}</button>
           </form>        
         </Card>
-      </div>
+        </div>
+      }
+      
     </>
   )
 }

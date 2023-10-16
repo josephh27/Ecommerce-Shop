@@ -12,7 +12,6 @@ const Orders = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   useEffect(() => {
     
     dispatch(STORE_ORDERS(data));

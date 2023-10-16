@@ -1,4 +1,5 @@
 - Fixed the filter function as using more than one filter will show all products.
+- Fixed the synchronization of sorting and filter of products as it malfunctioning due to being in different components and states.
 - Fixed some css responsiveness.
 - Fixed pagination (specifically because it retains the last page number even when you filter some products that makes the number page exceed the limit)
 - Fixed an UI error since it still shows the pagination even though there is no product found anymore.

@@ -5,7 +5,7 @@ import { FaListAlt } from 'react-icons/fa';
 import Search from '../../search/Search';
 import ProductItem from '../productItem/ProductItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { FILTER_BY_SEARCH, SORT_PRODUCTS, selectFilteredProducts, selectOrigFilteredProducts } from '../../../redux/slice/filterSlice';
+import { FILTER_BY_SEARCH, SORT_PRODUCTS, selectCurrentFilters, selectFilteredProducts, selectOrigFilteredProducts } from '../../../redux/slice/filterSlice';
 import Pagination from '../../pagination/Pagination';
 import { RESET_CURRENT_PAGE, selectCurrentPage } from '../../../redux/slice/paginationSlice';
 
@@ -13,8 +13,7 @@ import { RESET_CURRENT_PAGE, selectCurrentPage } from '../../../redux/slice/pagi
 const ProductList = ({products}) => {
   const [grid, setGrid] = useState(true);
   const [search, setSearch] = useState("");
-  const [sort, setSort] = useState("");
-
+  const [sort, setSort] = useState("a-z");
   // Pagination states
   const currentPage = useSelector(selectCurrentPage);
   const [productsPerPage] = useState(6);
@@ -23,20 +22,10 @@ const ProductList = ({products}) => {
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
-
   // Redux states
   const origFilteredProducts = useSelector(selectOrigFilteredProducts);
-
+  const currentFilters = useSelector(selectCurrentFilters);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(SORT_PRODUCTS({
-      sort
-    }));
-    dispatch(
-      RESET_CURRENT_PAGE()
-    )
-  }, [dispatch, sort]);
 
   useEffect(() => {
     dispatch(FILTER_BY_SEARCH({
@@ -46,6 +35,16 @@ const ProductList = ({products}) => {
       RESET_CURRENT_PAGE()
     )
   }, [dispatch, search, origFilteredProducts]);
+
+  useEffect(() => {
+    dispatch(SORT_PRODUCTS({
+      sort
+    }));
+    dispatch(
+      RESET_CURRENT_PAGE()
+    )
+  }, [dispatch, sort, currentFilters]);
+
   return (
     <div className={styles["product-list"]} id="product">
       <div className={styles.top}>

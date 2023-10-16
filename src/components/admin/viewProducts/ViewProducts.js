@@ -9,9 +9,8 @@ import { deleteObject, ref } from 'firebase/storage';
 import Loader from '../../loader/Loader';
 import Notiflix from 'notiflix';
 import { useDispatch, useSelector } from 'react-redux';
-import { STORE_PRODUCTS, selectProducts } from '../../../redux/slice/productSlice';
 import useFetchCollection from '../../../customHooks/useFetchCollection';
-import { FILTER_BY_SEARCH, selectFilteredProducts } from '../../../redux/slice/filterSlice';
+import { ADMIN_FILTER_ITEMS, selectAdminViewedProducts } from '../../../redux/slice/filterSlice';
 import Search from '../../search/Search';
 import Pagination from '../../pagination/Pagination';
 import { selectCurrentPage } from '../../../redux/slice/paginationSlice';
@@ -19,8 +18,7 @@ import { selectCurrentPage } from '../../../redux/slice/paginationSlice';
 const ViewProducts = () => {
   const [search, setSearch] = useState("");
   const { data, isLoading } = useFetchCollection("products");
-  const products = useSelector(selectProducts);
-  const filteredProducts = useSelector(selectFilteredProducts);
+  const filteredProducts = useSelector(selectAdminViewedProducts);
   const dispatch = useDispatch();
 
    // Pagination states
@@ -31,18 +29,18 @@ const ViewProducts = () => {
    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
    const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct); 
 
-  useEffect(() => {
-    dispatch(STORE_PRODUCTS({
-      products: data 
-    }));
-  }, [dispatch, data]);
+// useEffect(() => {
+  //   dispatch(STORE_PRODUCTS({
+  //     products: data 
+  //   }));
+  // }, [dispatch, data]);
 
   useEffect(() => {
-    dispatch(FILTER_BY_SEARCH({
+    dispatch(ADMIN_FILTER_ITEMS({
+      products: data,
       search,
-      products
     }))
-  }, [dispatch, search, products]);
+  }, [dispatch, search, data]);
 
   const confirmDelete = (id, imageURL) => {
     Notiflix.Confirm.show(

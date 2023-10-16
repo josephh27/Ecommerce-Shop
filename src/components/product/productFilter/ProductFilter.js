@@ -2,22 +2,28 @@ import React, { useEffect, useState } from 'react';
 import styles from "./ProductFilter.module.scss";
 import { selectMaxPrice, selectMinPrice, selectProducts } from '../../../redux/slice/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { FILTER_ITEMS, selectFilteredProducts } from '../../../redux/slice/filterSlice';
+import { FILTER_ITEMS } from '../../../redux/slice/filterSlice';
 import { RESET_CURRENT_PAGE } from '../../../redux/slice/paginationSlice';
 
 const ProductFilter = () => {
   const products = useSelector(selectProducts);
   const [category, setCategory] = useState("All");
   const [brand, setBrand] = useState("All");
-  const [price, setPrice] = useState(1499);
+  const [price, setPrice] = useState(0);
   const minPrice = useSelector(selectMinPrice);
   const maxPrice = useSelector(selectMaxPrice);
+  
   const dispatch = useDispatch();
-  console.log(maxPrice);
+  console.log(price);
+
   useEffect(() => {
     dispatch(FILTER_ITEMS({products, category, brand, price}));    
     dispatch(RESET_CURRENT_PAGE());
   }, [products, category, brand, price, dispatch]);
+
+  useEffect(() => {
+    setPrice(maxPrice);
+  }, [maxPrice]);
 
   const allCategories = [
     "All",
