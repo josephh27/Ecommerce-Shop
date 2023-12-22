@@ -1,6 +1,6 @@
 export const sliderData = [
     {
-      image: "https://i.ibb.co/CBGRLhG/bg-4.jpg",
+      image: "/src/assets",
       heading: "Shoes Villa",
       desc: "Up to 30% off on all onsale proucts.",
     },
