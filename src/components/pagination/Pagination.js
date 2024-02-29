@@ -8,8 +8,8 @@ const Pagination = ({ productsPerPage, totalProducts}) => {
     const pageNumbers = [];
     const totalPages = totalProducts / productsPerPage;
     // Limit the page numbers shown
-    const [pageNumberLimit] = useState(5);
-    const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
+    const [pageNumberLimit] = useState(10);
+    const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(1);
     const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
     const dispatch = useDispatch();
 
@@ -55,7 +55,7 @@ const Pagination = ({ productsPerPage, totalProducts}) => {
             Prev
         </li>
         
-        {pageNumbers.map((number) => {
+        {/* {pageNumbers.map((number) => {
              if (number < maxPageNumberLimit + 1 && number > minPageNumberLimit) {
 
                 return (               
@@ -69,7 +69,7 @@ const Pagination = ({ productsPerPage, totalProducts}) => {
              }
              return "";
             
-        })}
+        })} */}
 
         <li onClick={paginateNext} 
         className={currentPage === pageNumbers[pageNumbers.length - 1] ? `${styles.hidden}` : null}>
